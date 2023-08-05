@@ -14,13 +14,11 @@ export const getTodos = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const logger = createLogger("Getting all Todo");
 
-    const authorization = event.headers.Authorization;
-    const split = authorization.split(" ");
-    const jwtToken = split[1];
+    const userId = getUserId(event);
 
     logger.info("Getting all Todo");
 
-    const todos: Todo[] = await todoService.getAll(jwtToken);
+    const todos: Todo[] = await todoService.getAll(userId);
 
     return formatJSONResponse(HttpStatusCode.Ok, {
       items: todos,
@@ -32,15 +30,13 @@ export const createTodo = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const logger = createLogger("Creating a new Todo");
     try {
-      const authorization = event.headers.Authorization;
-      const split = authorization.split(" ");
-      const jwtToken = split[1];
+      const userId = getUserId(event);
 
       const todoCreate: TodoCreate = event.body as any;
 
       logger.info("Creating a new Todo", todoCreate);
 
-      const toDoItem = await todoService.create(todoCreate, jwtToken);
+      const toDoItem = await todoService.create(todoCreate, userId);
 
       return formatJSONResponse(HttpStatusCode.Created, {
         item: toDoItem,
@@ -58,16 +54,14 @@ export const updateTodo = middyfy(
     const logger = createLogger("Updating a Todo");
     console.log("Processing Event ", event);
     try {
-      const authorization = event.headers.Authorization;
-      const split = authorization.split(" ");
-      const jwtToken = split[1];
+      const userId = getUserId(event);
 
       const todoId = event.pathParameters.todoId;
       const updatedTodo: TodoUpdate = event.body as any;
 
       logger.info("Updating a Todo ", updatedTodo);
 
-      const toDoItem = await todoService.update(todoId, jwtToken, updatedTodo);
+      const toDoItem = await todoService.update(todoId, userId, updatedTodo);
 
       return formatJSONResponse(HttpStatusCode.Ok, {
         item: toDoItem,
@@ -84,14 +78,12 @@ export const deleteTodo = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const logger = createLogger("Deleting a Todo by Id");
     try {
-      const authorization = event.headers.Authorization;
-      const split = authorization.split(" ");
-      const jwtToken = split[1];
+      const userId = getUserId(event);
 
       const todoId = event.pathParameters.todoId;
       logger.info("Deleting a Todo by Id ", todoId);
 
-      const deleteData = await todoService.delete(todoId, jwtToken);
+      const deleteData = await todoService.delete(todoId, userId);
 
       return formatJSONResponse(HttpStatusCode.Ok, {
         result: deleteData,

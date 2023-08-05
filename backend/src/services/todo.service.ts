@@ -12,13 +12,11 @@ export default class TodoService {
     private todoStorage: TodoStorage
   ) {}
 
-  async getAll(jwtToken: string): Promise<Todo[]> {
-    const userId = parseUserId(jwtToken);
+  async getAll(userId: string): Promise<Todo[]> {
     return this.todoRepository.getAll(userId);
   }
 
-  async create(todoCreate: TodoCreate, jwtToken: string): Promise<Todo> {
-    const userId = parseUserId(jwtToken);
+  async create(todoCreate: TodoCreate, userId: string): Promise<Todo> {
     const todoId = v4();
     const newTodo: Todo = Object.assign({}, todoCreate, {
       todoId: todoId,
@@ -39,8 +37,7 @@ export default class TodoService {
     return await this.todoRepository.update(id, userId, todoUpdate);
   }
 
-  async delete(id: string, jwtToken: string): Promise<any> {
-    const userId = parseUserId(jwtToken);
+  async delete(id: string, userId: string): Promise<any> {
     return await this.todoRepository.delete(id, userId);
   }
 
