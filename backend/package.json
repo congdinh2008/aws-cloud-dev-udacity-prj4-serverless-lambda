@@ -12,7 +12,9 @@
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
-    "uuid": "^9.0.0"
+    "@types/jsonwebtoken": "^9.0.2",
+    "uuid": "^9.0.0",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
