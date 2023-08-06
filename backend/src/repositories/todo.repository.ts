@@ -24,12 +24,13 @@ export default class TodoRepository {
     return result.Items as Todo[];
   }
 
-  async getById(todoId: string): Promise<Todo> {
+  async getById(todoId: string, userId: string): Promise<Todo> {
     const result = await this.docClient
       .get({
         TableName: this.tableName,
         Key: {
           todoId,
+          userId,
         },
       })
       .promise();
@@ -80,12 +81,17 @@ export default class TodoRepository {
     return result.Attributes as Todo;
   }
 
-  async updateAttachmentUrl(todoId: string, attachmentUrl: string) {
+  async updateAttachmentUrl(
+    todoId: string,
+    userId: string,
+    attachmentUrl: string
+  ) {
     await this.docClient
       .update({
         TableName: this.tableName,
         Key: {
           todoId,
+          userId,
         },
         UpdateExpression: "set attachmentUrl = :attachmentUrl",
         ExpressionAttributeValues: {
