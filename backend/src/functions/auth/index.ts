@@ -2,12 +2,11 @@ import { handlerPath } from "@libs/handler-resolver";
 
 export const auth = {
   handler: `${handlerPath(__dirname)}/handler.auth`,
-  events: [
+  iamRoleStatements: [
     {
-      http: {
-        method: "get",
-        path: "auth",
-      },
+      Effect: "Allow",
+      Action: ["xray:PutTraceSegments", "xray:PutTelemetryRecords"],
+      Resource: "*",
     },
   ],
 };

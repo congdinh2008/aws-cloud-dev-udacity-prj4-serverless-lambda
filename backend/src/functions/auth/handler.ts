@@ -11,45 +11,44 @@ const logger = createLogger("auth");
 
 const jwksUrl = "https://udacity-prj4.jp.auth0.com/.well-known/jwks.json";
 
-export const auth = middyfy(
-  async (
-    event: APIGatewayTokenAuthorizerEvent
-  ): Promise<CustomAuthorizerResult> => {
-    try {
-      const jwtToken = await verifyToken(event.authorizationToken);
+export const auth = async (
+  event: APIGatewayTokenAuthorizerEvent
+): Promise<CustomAuthorizerResult> => {
+  try {
+    const jwtToken = await verifyToken(event.authorizationToken);
+    console.log("User was authorized", jwtToken);
 
-      return {
-        principalId: jwtToken.sub,
-        policyDocument: {
-          Version: "2012-10-17",
-          Statement: [
-            {
-              Action: "execute-api:Invoke",
-              Effect: "Allow",
-              Resource: "*",
-            },
-          ],
-        },
-      };
-    } catch (e) {
-      logger.error("User not authorized", { error: e.message });
+    return {
+      principalId: jwtToken.sub,
+      policyDocument: {
+        Version: "2012-10-17",
+        Statement: [
+          {
+            Action: "execute-api:Invoke",
+            Effect: "Allow",
+            Resource: "*",
+          },
+        ],
+      },
+    };
+  } catch (e) {
+    logger.error("User not authorized", { error: e.message });
 
-      return {
-        principalId: "user",
-        policyDocument: {
-          Version: "2012-10-17",
-          Statement: [
-            {
-              Action: "execute-api:Invoke",
-              Effect: "Deny",
-              Resource: "*",
-            },
-          ],
-        },
-      };
-    }
+    return {
+      principalId: "user",
+      policyDocument: {
+        Version: "2012-10-17",
+        Statement: [
+          {
+            Action: "execute-api:Invoke",
+            Effect: "Deny",
+            Resource: "*",
+          },
+        ],
+      },
+    };
   }
-);
+};
 
 async function verifyToken(authHeader) {
   // TODO: Implement token verification
