@@ -56,7 +56,11 @@ export const updateTodo = middyfy(
     try {
       const userId = getUserId(event);
 
+      console.log("Processing Event ", event);
+      
       const todoId = event.pathParameters.todoId;
+      console.log("Processing Event ", todoId);
+      
       const updatedTodo: TodoUpdate = event.body as any;
 
       logger.info("Updating a Todo ", updatedTodo);
@@ -98,19 +102,25 @@ export const deleteTodo = middyfy(
 
 export const generateUploadUrl = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    const logger = createLogger("Generate upload url");
     const userId = getUserId(event);
 
     const todoId = event.pathParameters.todoId;
     const attachmentId = v4();
 
     const uploadUrl = await todoService.generateUploadUrl(attachmentId);
+    logger.info("Generate upload url ", uploadUrl);
 
     await todoService.updateAttachmentUrl(userId, todoId, attachmentId);
+    logger.info(
+      `Update Todo Attachment URL ${uploadUrl} with attachment id = ${attachmentId} for todo with id = ${todoId}`
+    );
 
     return {
       statusCode: 202,
       headers: {
         "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
       },
       body: JSON.stringify({
         uploadUrl: uploadUrl,
