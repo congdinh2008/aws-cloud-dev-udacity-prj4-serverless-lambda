@@ -30,10 +30,9 @@ export default class TodoService {
 
   async update(
     id: string,
-    jwtToken: string,
+    userId: string,
     todoUpdate: TodoUpdate
   ): Promise<Todo> {
-    const userId = parseUserId(jwtToken);
     return await this.todoRepository.update(id, userId, todoUpdate);
   }
 
@@ -48,7 +47,7 @@ export default class TodoService {
   ) {
     const attachmentUrl = await this.todoStorage.getAttachmentUrl(attachmentId);
 
-    const item = await this.todoRepository.getById(todoId);
+    const item = await this.todoRepository.getById(todoId, userId);
 
     if (!item) throw new Error("Item not found");
 
@@ -56,7 +55,7 @@ export default class TodoService {
       throw new Error("User is not authorized to update item");
     }
 
-    await this.todoRepository.updateAttachmentUrl(todoId, attachmentUrl);
+    await this.todoRepository.updateAttachmentUrl(todoId, userId, attachmentUrl);
   }
 
   async generateUploadUrl(attachmentId: string): Promise<string> {
