@@ -1,4 +1,3 @@
-import { middyfy } from "@libs/lambda";
 import {
   APIGatewayTokenAuthorizerEvent,
   CustomAuthorizerResult,

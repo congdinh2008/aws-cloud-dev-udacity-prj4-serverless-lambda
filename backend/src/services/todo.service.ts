@@ -1,7 +1,6 @@
 import { v4 } from "uuid";
 import Todo from "src/models/todo.model";
 import TodoRepository from "src/repositories/todo.repository";
-import { parseUserId } from "src/helpers/auth/auth.helper";
 import { TodoCreate } from "src/view-models/todo-create.view-model";
 import { TodoUpdate } from "src/view-models/todo-update.view-model";
 import { TodoStorage } from "src/storages/todo.storage";
