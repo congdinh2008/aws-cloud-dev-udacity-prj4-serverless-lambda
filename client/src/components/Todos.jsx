@@ -119,10 +119,7 @@ export function Todos() {
   const [loadingTodos, setLoadingTodos] = useState(true)
   const navigate = useNavigate()
 
-  console.log('User', {
-    name: user.name,
-    email: user.email
-  })
+  console.log('User', user)
 
   useEffect(() => {
     async function foo() {
@@ -148,7 +145,7 @@ export function Todos() {
 
       <NewTodoInput onNewTodo={(newTodo) => setTodos([...todos, newTodo])} />
 
-      {renderTodos(loadingTodos, todos)}
+      {renderTodos()}
     </div>
   )
 }

@@ -11,9 +11,11 @@ ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
-    redirectUri={window.location.origin}
-    audience={`https://${domain}/api/v2/`}
-    scope="read:todo write:todo delete:todo"
+    authorizationParams={{
+      redirect_uri: window.location.origin,
+      audience: `https://${domain}/api/v2/`,
+      scope: "read:todo write:todo delete:todo",
+    }}
   >
     <App />
   </Auth0Provider>,
