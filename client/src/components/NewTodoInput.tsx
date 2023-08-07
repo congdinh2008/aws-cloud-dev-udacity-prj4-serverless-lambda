@@ -23,8 +23,8 @@ export const NewTodoInput = ({ onNewTodo }: any) => {
             const createdTodo = await createTodo(accessToken, newTodo)
             onNewTodo(createdTodo)
         } catch (e: any) {
-            console.log('Failed to created a new TODO', e.response.data.errorMessage)
-            alert('Todo creation failed: \n' + e.response.data.errorMessage)
+            console.log('Failed to created a new TODO', e.response.data.message)
+            alert('Todo creation failed: \n' + e.response.data.message)
         }
     }
 
