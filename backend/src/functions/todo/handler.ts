@@ -1,13 +1,13 @@
-import { formatJSONResponse } from "@libs/api-gateway";
-import { middyfy } from "@libs/lambda";
+import { formatJSONResponse } from "../../libs/api-gateway";
+import { middyfy } from "../../libs/lambda";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { HttpStatusCode } from "axios";
-import { getUserId } from "src/helpers/auth/auth.helper";
-import { createLogger } from "src/helpers/logging/logging.helper";
-import Todo from "src/models/todo.model";
-import todoService from "src/services";
-import { TodoCreate } from "src/view-models/todo-create.view-model";
-import { TodoUpdate } from "src/view-models/todo-update.view-model";
+import { getUserId } from "../../helpers/auth/auth.helper";
+import { createLogger } from "../../helpers/logging/logging.helper";
+import Todo from "../../models/todo.model";
+import todoService from "../../services";
+import { TodoCreate } from "../../view-models/todo-create.view-model";
+import { TodoUpdate } from "../../view-models/todo-update.view-model";
 import { v4 } from "uuid";
 
 export const getTodos = middyfy(
