@@ -4,7 +4,7 @@ import {
 } from "aws-lambda";
 import Axios from "axios";
 import { JwtPayload, verify } from "jsonwebtoken";
-import { createLogger } from "src/helpers/logging/logging.helper";
+import { createLogger } from "../../helpers/logging/logging.helper";
 
 const logger = createLogger("auth");
 
@@ -14,8 +14,8 @@ export const auth = async (
   event: APIGatewayTokenAuthorizerEvent
 ): Promise<CustomAuthorizerResult> => {
   try {
+    console.log("User was authorized", event);
     const jwtToken = await verifyToken(event.authorizationToken);
-    console.log("User was authorized", jwtToken);
 
     return {
       principalId: jwtToken.sub,

@@ -1,4 +1,4 @@
-import dynamoDBClient from "src/data/dynamodb.client";
+import dynamoDBClient from "../data/dynamodb.client";
 import TodoRepository from "./todo.repository";
 
 console.log("Todo Table: ", process.env.TODO_TABLE);

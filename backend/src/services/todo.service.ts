@@ -1,9 +1,9 @@
 import { v4 } from "uuid";
-import Todo from "src/models/todo.model";
-import TodoRepository from "src/repositories/todo.repository";
-import { TodoCreate } from "src/view-models/todo-create.view-model";
-import { TodoUpdate } from "src/view-models/todo-update.view-model";
-import { TodoStorage } from "src/storages/todo.storage";
+import Todo from "../models/todo.model";
+import TodoRepository from "../repositories/todo.repository";
+import { TodoCreate } from "../view-models/todo-create.view-model";
+import { TodoUpdate } from "../view-models/todo-update.view-model";
+import { TodoStorage } from "../storages/todo.storage";
 
 export default class TodoService {
   constructor(

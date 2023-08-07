@@ -1,6 +1,6 @@
-import Todo from "src/models/todo.model";
+import Todo from "../models/todo.model";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { TodoUpdate } from "src/view-models/todo-update.view-model";
+import { TodoUpdate } from "../view-models/todo-update.view-model";
 
 export default class TodoRepository {
   constructor(private docClient: DocumentClient, private tableName: string) {}
