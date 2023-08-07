@@ -22,9 +22,9 @@ export const NewTodoInput = ({ onNewTodo }: any) => {
             const newTodo = Object.assign({}, { name: newTodoName, dueDate });
             const createdTodo = await createTodo(accessToken, newTodo)
             onNewTodo(createdTodo)
-        } catch (e) {
-            console.log('Failed to created a new TODO', e)
-            alert('Todo creation failed')
+        } catch (e: any) {
+            console.log('Failed to created a new TODO', e.response.data.errorMessage)
+            alert('Todo creation failed: \n' + e.response.data.errorMessage)
         }
     }
 
