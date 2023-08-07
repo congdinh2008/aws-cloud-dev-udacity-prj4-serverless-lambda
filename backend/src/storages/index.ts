@@ -2,6 +2,10 @@ import * as AWS from "aws-sdk";
 import * as AWSXRay from "aws-xray-sdk-core";
 import { TodoStorage } from "./todo.storage";
 
+if (process.env.IS_OFFLINE) {
+  AWSXRay.setContextMissingStrategy("LOG_ERROR");
+}
+
 const XAWS = AWSXRay.captureAWS(AWS);
 const urlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION);
 
